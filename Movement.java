@@ -1,5 +1,5 @@
 import org.unige.aims.GridWorld.Direction;
-//classe per gestire il movimento del robot
+//Classe per gestire le direzioni di movimento del robot
 public class Movement {
 	Cell CurrentCell;  //cella in cui si trova il robot attualmente
 	Cell TargetCell;  //cella in cui il robot vuole andare
@@ -7,10 +7,10 @@ public class Movement {
 	//costruttore per la classe
 	public Movement() {}
 	
-	//metodo che in base alla differenza tra le coordinate delle due posizioni
-	//riconosce se il movimento e' verso NORD,SUD,EST o OVEST, le uniche
-	//direzioni riconosciute dal robot
-	public Direction computeDirection(Cell CurrentCell, Cell TargetCell) {
+	/* metodo che in base alla differenza tra le coordinate delle due posizioni
+	*  riconosce se il movimento e' verso NORD,SUD,EST o OVEST, le uniche
+	*  direzioni riconosciute dal robot  */
+ 	public Direction computeDirection(Cell CurrentCell, Cell TargetCell) {
 		if ((CurrentCell.getRow() - 1 == TargetCell.getRow()) && (CurrentCell.getCol() == TargetCell.getCol()))  //stessa colonna, sale di una riga
 			return Direction.NORTH;  //direzione nord
 		if ((CurrentCell.getRow() + 1 == TargetCell.getRow()) && (CurrentCell.getCol() == TargetCell.getCol()))  //stessa colonna, scende di una riga

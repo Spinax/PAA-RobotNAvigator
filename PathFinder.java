@@ -39,7 +39,7 @@ public class PathFinder {
 	//metodo per calcolare i costi H delle CLA
 	private void computeH(Cell c) {
 		//sottraggo 2 per compensare il fatto che la griglia parte da 0 e arriva a grid_size-1 per due sottrazioni
-		c.setH((grid_size - c.getRow()) + (grid_size - c.getCol()) - 2);  //manhattan distance method := (Xf-Xi)+(Yf-Yi) per stimare h
+		c.setH((grid_size - c.getRow()) + (grid_size - c.getCol()) - 2);  //manhattan distance method := (Xf-Xi)+(Yf-Yi) per stimare H
 	}
 	//metodo che trova la cella adiacente con il costo minore con un semplice algoritmo per trovare il valore minimo in una collezione di dati
 	private Cell chooseBestCell(ArrayList<Cell> AdjacentFreeCells) {
@@ -54,7 +54,7 @@ public class PathFinder {
 		return BestCell;	
 	}
 	//metodo per rimuovere dalla lista di CLA le celle della closed list
-	private void remCells(ArrayList<Cell> cl, ArrayList<Cell> fac) {
+	private void removeCells(ArrayList<Cell> cl, ArrayList<Cell> fac) {
 		ArrayList<Cell> markedForDel = new ArrayList<Cell>();  //lista che conterra' le celle da eliminare dalla lista delle CLA
 		for (Cell oc : fac) {  //prendo una per una le CLA 
 			for (Cell cc : cl) {  //e le comparo con tutti gli elementi della closed list
@@ -70,9 +70,9 @@ public class PathFinder {
 	private boolean isInClosedList(Cell c) {
 		for (Cell cl : closedList) {
 			if (c.getRow() == cl.getRow() && c.getCol() == cl.getCol())
-				return false;
+				return true;
 		}
-		return true;
+		return false;
 	}
 	//metodo che torna indietro nel caso non ci siano CLA,rimuovendo l' ultima cella dal percorso
 	private void getBack() {
@@ -86,7 +86,7 @@ public class PathFinder {
 		Movement dir = new Movement();  //creo l'oggetto che gestisce gli spostamenti
 		path.add(CurrentCell); //aggiungo la cella corrente alla lista percorso
 		ArrayList<Cell> tempCells = getAdjacentFreeCells();  //creo un arraylist di CLA
-		remCells(closedList,tempCells);  //rimuovo le CLA che sono presenti nella closed list
+		removeCells(closedList,tempCells);  //rimuovo le CLA che sono presenti nella closed list
 		if((CurrentCell.getRow() == 0 && CurrentCell.getCol() == 0) && tempCells.size() == 0 ) { //se sono tornato in 0,0 e non ho CLA il labirinto non ha uscita
 			System.out.println("Nessun percorso!");
 			System.exit(0);
@@ -94,8 +94,8 @@ public class PathFinder {
 		if (tempCells.size() != 0) {  //se ho spostamenti possibili mi muovo nella direzione migliore
 			Grid.moveToAdjacentCell(dir.computeDirection(CurrentCell,chooseBestCell(tempCells)));  
 			CurrentCell = chooseBestCell(tempCells); //aggiorno la posizione
-			if(isInClosedList(CurrentCell)) //se non e' gia' nella closed list aggiungo la posizione alla lista
-			closedList.add(CurrentCell);	
+			if(!isInClosedList(CurrentCell)) //se non e' gia' nella closed list aggiungo la posizione alla lista
+				closedList.add(CurrentCell);	
 		}
 		else
 			getBack();  //altrimenti torno indietro	

@@ -1,6 +1,6 @@
 import org.unige.aims.GridWorld.Coordinate;
 //Classe per definire l' unita' cella, di cui e' composto il gridWorld
-//Contiene i parametri G e H per permettere di calcolare il percorso migliore usando l' algoritmo A*
+//Contiene il parametro H per permettere di calcolare la cella migliore in cui spostarsi
 public class Cell {
 	
 	private Cell PreviousCell; //cella precedente nel percorso,utilizzato nel calcolo di G e nel metodo getBack()
@@ -12,6 +12,7 @@ public class Cell {
 	public Cell(Coordinate other) {
 		row = other.row;
 		col = other.col;
+		PreviousCell = null;
 	}
 	//costruttore per le celle del percorso 
 	public Cell(Coordinate other, Cell PreviousCell) {
